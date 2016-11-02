@@ -64,7 +64,7 @@ describe 'service configuration', :type => 'os'  do
     loop do
       sleep 1
       pid = ssh(ip, 'vcap', "pgrep #{process_name}", ssh_options)
-      break unless (tries += 1) < 60 && (pid =~ /^\d+\n$/).nil?
+      break unless (tries += 1) < 30 && (pid =~ /^\d+\n$/).nil?
     end
 
     matched = pid.match(/^\d+\n$/)
@@ -73,7 +73,7 @@ describe 'service configuration', :type => 'os'  do
       dump_log(ip, "/var/vcap/monit/svlog/current")
       dump_log(ip, "/var/vcap/monit/monit.log")
     end
-    expect(matched).to_not be_nil, "Expected process '#{process_name}' to be running after 60 seconds, but it was not"
+    expect(matched).to_not be_nil, "Expected process '#{process_name}' to be running after 30 seconds, but it was not"
   end
 
   def runit_running_on_instance(ip)
