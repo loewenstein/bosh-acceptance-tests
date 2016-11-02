@@ -127,7 +127,7 @@ describe 'service configuration', :type => 'os'  do
 
       waitForSymlink() {
         local name="${1}"
-        for i in `seq 1 60`; do
+        for i in `seq 1 30`; do
           if [ -h "${name}" ]; then break; fi
           sleep 1
         done
