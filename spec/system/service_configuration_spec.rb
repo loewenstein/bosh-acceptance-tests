@@ -98,7 +98,7 @@ describe 'service configuration', :type => 'os'  do
         local proc_name="${1}"
         local old_pid="${2}"
 
-        for i in `seq 1 60`; do
+        for i in `seq 1 30`; do
           new_pid="$(pgrep ^${proc_name}$)"
           if [ -n "${new_pid}" ] && [ "x${old_pid}" != "x${new_pid}" ]; then break; fi
           sleep 1
