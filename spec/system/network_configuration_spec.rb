@@ -17,7 +17,7 @@ describe 'network configuration' do
     @requirements.cleanup(deployment)
   end
 
-  describe 'resolving DNS entries', dns: true do
+  describe 'resolving DNS entries', dns: true, powerdns: true do
     let(:dns) { Resolv::DNS.new(nameserver: @env.dns_host) }
 
     it 'forward looks up instance' do
