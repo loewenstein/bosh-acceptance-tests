@@ -97,7 +97,7 @@ describe 'with release and stemcell and subsequent deployments' do
       @requirements.cleanup(deployment)
     end
 
-    it 'should migrate disk contents', ssh: true do
+    it 'should migrate disk contents', ssh: true, migrate_disk: true do
       # Warden df don't work so skip the persistent disk size check
       unless warden?
         expect(persistent_disk('colocated', 0, deployment: deployment)).to_not eq(@size)
