@@ -43,14 +43,14 @@ describe 'with release, stemcell and deployment', core: true do
   end
 
   describe 'job' do
-    it 'should recreate a job' do
+    it 'should recreate a job', :skip_task_check => true do
       old_vm_cid = JSON.parse(bosh_safe('instances --details', deployment: deployment.name).output)['Tables'].first['Rows'].first["vm_cid"]
       expect(bosh_safe('recreate batlight/0', deployment: deployment.name)).to succeed
       new_vm_cid = JSON.parse(bosh_safe('instances --details', deployment: deployment.name).output)['Tables'].first['Rows'].first["vm_cid"]
       expect(old_vm_cid).not_to eq(new_vm_cid)
     end
 
-    it 'should stop and start a job' do
+    it 'should stop and start a job', :skip_task_check => true do
       expect(bosh_safe('stop batlight/0', deployment: deployment.name)).to succeed
       bosh_instances = bosh_safe('instances', deployment: deployment.name).output
       batlight_0_process_state = JSON.parse(bosh_instances)['Tables'].first['Rows'].first["process_state"]
@@ -64,7 +64,7 @@ describe 'with release, stemcell and deployment', core: true do
   end
 
   describe 'logs' do
-    it 'should get agent log' do
+    it 'should get agent log', :skip_task_check => true do
       with_tmpdir do
         expect(bosh_safe('logs batlight/0 --agent', deployment: deployment.name)).to succeed_with /Downloading resource/
         files = tar_contents(tarfile)
@@ -72,7 +72,7 @@ describe 'with release, stemcell and deployment', core: true do
       end
     end
 
-    it 'should get job logs' do
+    it 'should get job logs', :skip_task_check => true do
       with_tmpdir do
         expect(bosh_safe('logs batlight/0', deployment: deployment.name)).to succeed_with /Downloading resource/
         files = tar_contents(tarfile)
